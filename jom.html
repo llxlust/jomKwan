@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="jom.css" />
+  </head>
+  <body>
+    <div class="hero">
+      <h1 class="title">สู้ๆกับงานะจ๊ะโกโก้</h1>
+      <div class="jContainer"><img src="./jomKwan.png" /></div>
+      <div class="container">
+        <div class="disc">
+          <img
+            src="https://static.vecteezy.com/system/resources/thumbnails/009/393/830/small/black-vinyl-disc-record-for-music-album-cover-design-free-png.png"
+          />
+        </div>
+        <div class="musicName">จอมขวัญ</div>
+        <div class="artist">โก๊ะ นิพนธ์</div>
+        <audio id="bgm" src="./jomKwanBMG.mp3"></audio>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const music = document.getElementById("bgm");
+        music.play();
+      });
+    </script>
+  </body>
+</html>

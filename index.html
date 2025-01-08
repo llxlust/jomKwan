@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>สู้ๆจ้า</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap");
+    </style>
+  </head>
+  <body>
+    <div class="hero">
+      <div class="title rubik-vinyl-regular">Provide password for unlock</div>
+      <div id="pin"></div>
+      <div class="input">
+        <div class="row">
+          <div class="pad" id="1">1</div>
+          <div class="pad" id="2">2</div>
+          <div class="pad" id="3">3</div>
+        </div>
+        <div class="row">
+          <div class="pad" id="4">4</div>
+          <div class="pad" id="5">5</div>
+          <div class="pad" id="6">6</div>
+        </div>
+        <div class="row">
+          <div class="pad" id="7">7</div>
+          <div class="pad" id="8">8</div>
+          <div class="pad" id="9">9</div>
+        </div>
+        <div class="row">
+          <div class="special"></div>
+          <div class="pad" id="0">0</div>
+          <div class="special" id="del">Delete</div>
+        </div>
+      </div>
+      <div class="loader" id="loader">
+        <div class="spinner"></div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      let currentPassword = "";
+      const numberPad = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+      const createBall = (id) => {
+        const pinElement = document.getElementById("pin");
+        const pinBtn = document.createElement("div");
+        pinBtn.style.width = "15px";
+        pinBtn.style.height = "15px";
+        pinBtn.style.backgroundColor = "transparent";
+        pinBtn.style.borderRadius = "10px";
+        pinBtn.style.border = "2px solid white";
+        pinBtn.id = "ball" + id;
+        pinElement.appendChild(pinBtn);
+      };
+      const filledBall = async () => {
+        if (currentPassword.length === 0) {
+          return;
+        }
+        for (let i = 0; i < currentPassword.length; i++) {
+          const ele = document.getElementById(`ball${i + 1}`);
+          ele.style.backgroundColor = "white";
+        }
+        console.log(currentPassword);
+        if (currentPassword.length !== 6) {
+          return;
+        }
+        if (currentPassword === "160946") {
+          currentPassword = "";
+          const loaderELe = document.getElementById("loader");
+          loaderELe.style.display = "flex";
+          function delay(ms) {
+            return new Promise((resolve) => setTimeout(resolve, ms)).then(
+              () => {
+                window.location.href = "jom.html";
+              }
+            );
+          }
+          await delay(3000);
+        } else {
+          Swal.fire({
+            title: "รหัสผิดจ้า!",
+            text: "คำใบ้: เธอพิมพ์ทุกวัน",
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "รับทราบ!",
+          }).then(() => {
+            currentPassword = "";
+            resetBall();
+          });
+        }
+      };
+      const resetBall = () => {
+        numberPad.forEach((e, i) => {
+          const ele = document.getElementById(`ball${i + 1}`);
+          if (ele) {
+            ele.style.backgroundColor = "transparent";
+          }
+        });
+      };
+      const deleteBall = () => {
+        if (currentPassword.length < 1) {
+          return;
+        }
+        const target = String(currentPassword.length);
+        const x = Array.from(currentPassword);
+        x.pop();
+        x.join("");
+        currentPassword = x;
+        const ele = document.getElementById("ball" + target);
+        ele.style.backgroundColor = "transparent";
+      };
+      const initialize = () => {
+        for (let i = 0; i < 6; i++) {
+          createBall(i + 1);
+        }
+        numberPad.forEach((value) => {
+          const elePad = document.getElementById(String(value));
+          if (elePad) {
+            elePad.addEventListener("click", () => {
+              if (currentPassword.length < 6) {
+                currentPassword += value;
+                filledBall();
+              }
+            });
+          }
+        });
+        const delEle = document.getElementById("del");
+        delEle.addEventListener("click", () => deleteBall());
+      };
+      initialize();
+    </script>
+  </body>
+</html>
