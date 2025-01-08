@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="jom.css" />
   </head>
   <body>
-    <div class="hero">
+    <div class="hero" id="hero">
       <h1 class="title">สู้ๆกับงานะจ๊ะโกโก้</h1>
       <div class="jContainer"><img src="./jomKwan.png" /></div>
       <div class="container">
@@ -23,10 +23,17 @@
         </audio>
       </div>
     </div>
+    <div class="dummy" id="dummy">แตะหน้าจอเพื่อไปต่อ</div>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        const music = document.getElementById("bgm");
-        music.play();
+        const dm = document.getElementById("dummy");
+        dm.addEventListener("click", () => {
+          const hero = document.getElementById("hero");
+          dm.style.display = "none";
+          hero.style.display = "block";
+          const music = document.getElementById("bgm");
+          music.play();
+        });
       });
     </script>
   </body>
